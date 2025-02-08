@@ -108,6 +108,11 @@ def search_and_filter_data(html):
     # Пример поиска всех ссылок на странице
     links = html.find_all('a')
     print(f"Найдено {len(links)} ссылок на странице.")
+    
+    # Пример фильтрации ссылок по ключевому слову
+    keyword = "example"
+    filtered_links = [link for link in links if keyword in link.get('href', '')]
+print(f"Найдено {len(filtered_links)} ссылок, содержащих '{keyword}'.")
 
 def handle_pagination(base_url, session=None):
     """Обход ограничений по URL (пагинация)."""
@@ -130,6 +135,12 @@ if __name__ == "__main__":
         # Настройка сессии
         session.headers.update({"User-Agent": get_random_user_agent()})
         session.proxies.update(PROXIES)
+        
+        # Обработка пагинации
+        handle_pagination(base_url, session)
+    
+    # Очистка временных данных
+    clean_temp_data("page_content.txt")
         
         # Обработка пагинации
         handle_pagination(base_url, session)
